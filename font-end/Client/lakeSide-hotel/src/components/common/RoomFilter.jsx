@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 
-const RoomFilter = (data, setFilteredData) => {
+const RoomFilter = ({data, setFilteredData}) => {
     const[filter, setFilter] = useState("")
-    const handleSelectChange =(e) =>{
+
+    const handleSelectChange = (e) =>{
     const selectedRoomType = e.target.value
+    setFilter(selectedRoomType)
     const filteredRooms = data.filter((room) => 
-    room.roomType.toLowercase()
-    .includes(selectedRoomType.toLowercase())) 
+    room.roomType.toLowercase().includes(selectedRoomType.toLowercase())) 
     setFilteredData(filteredRooms)
     }
     const clearFilter = () =>{
@@ -14,7 +15,7 @@ const RoomFilter = (data, setFilteredData) => {
         setFilteredData(data)
     }
 
-    const roomTypes = ["", ...new Set(data.map((room) =>   room.roomType))]
+    const roomTypes = ["", ...new Set(data.map((room) => room.roomType))]
 
 
 
@@ -23,14 +24,11 @@ const RoomFilter = (data, setFilteredData) => {
     <span className="input-group-text" id="room-type-filter">
     Filter rooms by type
     </span>
-    <select
-    className="form-select"
-    value={filter}
-    onChange={handleSelectChange}>
+    <select className="form-select" value={filter} onChange={handleSelectChange}>
         <option value={""}> select a room type to filter....</option>
     {roomTypes.map((type,index) => (
-        <option key={index} value={type}>
-            {type}
+        <option key={index} value={String(type)}>
+            {String(type)}
         </option>
         ))}
     </select>
